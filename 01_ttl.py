@@ -1,7 +1,7 @@
 # model1_dynamic_ttl.py
 """
 Model 1: Dynamic TTL Adjustment (Shrink or Extend Expiry)
-Instead of a fixed aging timer, compute TTL per entry based on real-time factors.
+Instead of a fixed aging timer, computing TTL per entry based on real-time factors.
 """
 
 import math
@@ -14,7 +14,7 @@ def calculate_dynamic_ttl(
 
     Formula: TTL(mac) = TTL_base * alpha * F_activity * F_stability * F_pressure
     """
-    # 1. Activity Factor (Higher tx_count -> stays longer)
+    # 1. Activity Factor (If Higher tx_count -> entry stays longer)
     f_activity = 1 + math.log(1 + tx_count)
 
     # 2. Stability Factor (Flapping MAC -> shrinks fast)
@@ -24,10 +24,10 @@ def calculate_dynamic_ttl(
     occupancy_ratio = occupied / capacity
     f_pressure = 1 - occupancy_ratio
 
-    # Composite TTL Calculation
+    
     ttl = ttl_base * alpha * f_activity * f_stability * f_pressure
 
-    # State classifications based on PPT parameters
+    # State classifications 
     activity_state = (
         "ACTIVE"
         if tx_count >= 16
@@ -59,7 +59,7 @@ def calculate_dynamic_ttl(
 if __name__ == "__main__":
     print("--- Testing Model 1: Dynamic TTL ---")
 
-    # Example 1: Active, stable, low occupancy (Should EXTEND)
+    # Example 1: Active, stable(no flapping), low occupancy (Should EXTEND)
     test1 = calculate_dynamic_ttl(tx_count=50, flap_count=0, occupied=400)
     print(f"Test 1 (Active/Stable): {test1['ttl_seconds']}s -> {test1['states']}")
 
