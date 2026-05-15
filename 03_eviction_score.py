@@ -23,7 +23,7 @@ def calculate_eviction_priority(age, ttl_max, tx_count, flap_count, weights=[0.4
 if __name__ == "__main__":
     print("\n--- Testing Model 3: Cache Eviction Priority Engine ---")
 
-    # Custom weights mapped out to closely fit presentation mock specifications
+    
     custom_weights = [1.0, 1.0, 0.1]
 
     mac_a = calculate_eviction_priority(
