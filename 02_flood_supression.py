@@ -18,12 +18,12 @@ def evaluate_flood_suppression(
     p_table_full = occupied / capacity
     p_high_traffic = current_pps / max_pps
 
-    # Score calculation
+    
     flood_score = (
         (w1 * p_seen) + (w2 * (1 - p_table_full)) + (w3 * (1 - p_high_traffic))
     )
 
-    # Threshold condition
+    
     action = "FLOOD ALLOWED" if flood_score > 0.6 else "SUPPRESS FLOOD"
 
     return {"flood_score": round(flood_score, 4), "action": action}
@@ -32,7 +32,7 @@ def evaluate_flood_suppression(
 if __name__ == "__main__":
     print("\n--- Testing Model 2: Flood Suppression Score ---")
 
-    # Example 1: New MAC, table 80% full, traffic 70% of max
+    # Example 1: New MAC entry, table 80% full, traffic 70% full
     test1 = evaluate_flood_suppression(
         p_seen=0, occupied=800, current_pps=70, max_pps=100
     )
